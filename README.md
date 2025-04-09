@@ -167,9 +167,9 @@ Feature Importance -kuvaaja).
 Recallin välillä tarpeen mukaan.
 
 
-[Tästä Colab-skriptistä](notebooks/Colab_Script_Mallien_vertailu_(v2_LogReg,_XGBoost,_LightGBM).ipynb) näet Logistisen Regression, XGBoostin ja LightGBM:n vertailun.
+[Tästä -skriptistä](notebooks/Colab_Script_Mallien_vertailu_(v2_LogReg,_XGBoost,_LightGBM).ipynb) näet Logistisen Regression, XGBoostin ja LightGBM:n vertailun.
 
-* **Visualisointeja (Esimerkkejä):**
+* **Visualisointeja:**
 
     * **Mallien vertailu (pylväskaavio):**
         
