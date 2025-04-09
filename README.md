@@ -1,11 +1,41 @@
-# Ilmanlaadun Ennustaminen Helsingissä (harjoitusprojekti)
+# Ilmanlaadun ennustaminen (harjoitusprojekti Helsingistä)
 
-Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja ilmanlaadun ennustamiseksi Helsingissä.
+Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja ilmanlaadun ennustamiseksi (Helsingissä).
 
 ## Projektin Tavoite
 
-Kehittää koneoppimismalli ennustamaan tiettyjen ilmansaasteiden (aluksi otsooni O3, myöhemmin ehkä myös esim. PM2.5, PM10, NO2,) pitoisuuksia 
-Helsingissä tulevaisuudessa (esim. seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja mahdollisesti liikennedataa. 
+Tämä projekti keskittyy Helsingin kaupunki-ilmanlaadun analysointiin ja erityisesti maanpinnan otsonipitoisuuksien ([O₃]) ennustamiseen. 
+Projektissa hyödynnetään FMI:n (Ilmatieteen laitos) avointa dataa Helsingin Kallio 2 (otsoni) ja Kaisaniemi (sää) mittausasemilta aikaväliltä 
+2020-2025.
+
+Projektin tavoitteena on tutkia otsonipitoisuuksiin vaikuttavia tekijöitä, erityisesti sääolosuhteita (lämpötila, tuulen nopeus, ilmanpaine), ja 
+kokeilla erilaisia aikasarja- ja koneoppimismalleja otsonin tai sen piikkien ennustamiseksi.
+
+## Sisällys
+
+* [Datalähteet](#datalähteet)
+* [Projektin rakenne](#projektin-rakenne)
+* [Asennus ja käyttöönotto](#asennus-ja-käyttöönotto)
+* [Käyttö](#käyttö)
+* [Metodologia](#metodologia)
+* [Tulokset ja nykytila](#tulokset-ja-nykytila)
+* [Lisenssi](#lisenssi)
+
+## Datalähteet
+
+Projektissa käytetty data on peräisin Ilmatieteen laitoksen avoimen datan rajapinnasta ja kattaa seuraavat asemat ja aikavälin:
+
+1.  **Helsinki Kallio 2:** Ilmanlaadun mittausasema. Tästä datasta käytetään erityisesti `Otsoni [µg/m³]` -sarjaa.
+2.  **Helsinki Kaisaniemi:** Säähavaintoasema. Tästä datasta käytetään muuttujia kuten `Lämpötilan keskiarvo [°C]`, `Keskituulen nopeus [m/s]` ja 
+`Ilmanpaineen keskiarvo [hPa]`.
+
+Aikaväli molemmille datoille on noin **1.4.2020 - 1.4.2025**.
+
+Raakadata löytyy tämän repositorion `/data/raw/` -kansiosta.
+
+* `Helsinki Kallio 2_ 1.4.2020 - 1.4.2025_... .csv`
+* `Helsinki Kaisaniemi_ 1.4.2020 - 1.4.2025_... .csv`
+
 
 ## Tietolähteet (Esimerkkejä / Tutkittavia)
 
@@ -66,6 +96,41 @@ Tässä on projektin hakemistorakenne:
 
 * Tutkimusnotebookit löytyvät `notebooks/`-kansiosta.
 * Katso aluksi ainakin EDA skriptit Kaisaniemestä ja Kalliosta.
+
+## Käyttö
+
+Analyysi ja mallinnus on tehty pääasiassa Jupyter Notebookeissa (`/notebooks`-kansio).
+
+1.  Avaa haluamasi notebook (esim. `EDA_Kallio_Otsoni.ipynb`) Jupyter Notebookissa, JupyterLabissa tai Google Colabissa.
+2.  Suorita solut järjestyksessä. Notebookit sisältävät datan latauksen, esikäsittelyn, analyysin, mallinnuksen ja visualisoinnin vaiheet.
+
+## Metodologia
+
+Projekti noudattaa karkeasti CRISP-DM-metodologian vaiheita:
+
+1.  **Datan ymmärtäminen:** Datalähteisiin tutustuminen ja eksploratiivinen data-analyysi (EDA) otsonin ja säämuuttujien käyttäytymisen 
+ymmärtämiseksi (trendi, kausivaihtelu, korrelaatiot).
+2.  **Datan valmistelu:** Datan puhdistus, yhdistäminen aikaleiman perusteella, puuttuvien arvojen käsittely, datan uudelleenotanta (`resample`) 
+säännölliseen tuntitaajuuteen ja piirteiden muokkaus (viiveistetty data, aika-piirteet).
+3.  **Mallinnus:** Eri ennustusmenetelmien kokeilu:
+    * **Aikasarjamallit:** ARIMA, SARIMA, SARIMAX (säämuuttujilla).
+    * **Koneoppimismallit (Suunnitteilla/Kokeilussa):** Logistinen Regressio (baseline), XGBoost, LightGBM, RNN, LSTM. Tavoitteena erityisesti 
+otsonipiikkien ennustaminen (luokittelu).
+4.  **Evaluointi:** Mallien suorituskyvyn arviointi käyttäen sopivia metriikoita (RMSE, MAE regressioon; Classification Report, Confusion Matrix, 
+ROC AUC luokitteluun).
+
+## Tulokset ja nykytila
+
+* **EDA:** Alustava analyysi osoittaa selvää vuorokausi- ja vuosittaista kausivaihtelua otsonipitoisuuksissa. Korrelaatioita säämuuttujien kanssa 
+on havaittu (yksityiskohdat EDA-notebookeissa).
+* **Aikasarjamallinnus (SARIMAX):**
+    * Datan uudelleenotanta (`resample`) säännölliseen tuntitaajuuteen mahdollisti SARIMAX-mallien ajamisen ilman `NaN`-ennusteita.
+    * Kokeillut SARIMAX-mallit (myös säämuuttujilla) tuottivat numeerisia ennusteita, mutta niiden tarkkuus (RMSE/MAE) ei ollut optimaalinen 
+verrattuna jopa yksinkertaisempaan SARIMA-malliin ilman resamplea.
+    * Mallit eivät onnistuneet ennustamaan otsonipiikkejä (korkeita pitoisuuksia > 90. persentiili).
+* **Nykytila:** Projekti on siirtymässä koneoppimismallien kokeiluun (XGBoost, LightGBM, RNN, LSTM) keskittyen erityisesti piikkien ennustamiseen 
+luokittelutehtävänä. Aikasarjamallien (SARIMAX) jatkokehitys vaatisi todennäköisesti tarkempaa mallin järjestyksen viritystä ja mahdollisesti eri 
+lähestymistapaa datan esikäsittelyyn.
 
 ## Kontribuutio
 
