@@ -1,11 +1,11 @@
-# Ilmanlaadun Ennustaminen Helsingissä (Harjoitusprojekti)
+# Ilmanlaadun Ennustaminen Helsingissä (harjoitusprojekti)
 
 Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja ilmanlaadun ennustamiseksi Helsingissä.
 
 ## Projektin Tavoite
 
 Kehittää koneoppimismalli ennustamaan tiettyjen ilmansaasteiden (esim. PM2.5, PM10, NO2, O3) pitoisuuksia Helsingissä tulevaisuudessa (esim. 
-seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja mahdollisesti liikennedataa.
+seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja mahdollisesti liikennedataa. (tällä hetkellä vain FMI dataa)
 
 ## Tietolähteet (Esimerkkejä / Tutkittavia)
 
@@ -62,7 +62,6 @@ Tässä on projektin hakemistorakenne:
 ## Käyttö
 
 * Tutkimusnotebookit löytyvät `notebooks/`-kansiosta.
-* Aloita esimerkiksi `notebooks/01-eda.ipynb`.
 
 ## Kontribuutio
 
