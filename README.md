@@ -11,7 +11,7 @@ seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja m
 
 * **Ilmatieteen laitos (FMI):** Avoimen datan rajapinnat tarjoavat historiallista säädataa ja ilmanlaatuhavaintoja.
     * [FMI Avoin Data](https://ilmatieteenlaitos.fi/avoin-data)
-	* [FMI Avoin Data](https://www.ilmatieteenlaitos.fi/havaintojen-lataus)
+	* [FMI havaintojen lataus](https://www.ilmatieteenlaitos.fi/havaintojen-lataus)
 
 * Ladattuna dataa tällä hetkellä **data/raw** kansiossa Helsingin Kaisaniemestä ajalta 1.4.2000 - 1.4.2025
 
