@@ -1,4 +1,4 @@
-# Ilmanlaadun ennustaminen (harjoitusprojekti Helsingistä)
+'# Ilmanlaadun ennustaminen (harjoitusprojekti Helsingistä)
 
 Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja ilmanlaadun ennustamiseksi (Helsingissä).
 
@@ -166,28 +166,28 @@ Feature Importance -kuvaaja).
         * **Luokittelukynnys:** Kokeilemalla eri todennäköisyyskynnysarvoja (oletus 0.5) voitaisiin löytää parempi tasapaino Precisionin ja 
 Recallin välillä tarpeen mukaan.
 
-Tässä on linkki [yhdistettyyn vertailuskriptiin (LogReg, XGBoost,LightGBM)](notebooks/Colab_Script_Mallien_vertailu_(v2_LogReg,_XGBoost,_LightGBM).ipynb).
 
+Tässä on linkki [yhdistettyyn vertailuskriptiin (LogReg, XGBoost, LightGBM)](notebooks/Colab_Script_Mallien_vertailu_(v2_LogReg,_XGBoost,_LightGBM).ipynb).
 
-    * **Visualisointeja (Esimerkkejä):**
+* **Visualisointeja (Esimerkkejä):**
 
-        * **Mallien vertailu (pylväskaavio):** 
-            ```markdown
-            ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
-            ```
-        * **Precision-Recall -käyrä (paras malli):** 
-            ```markdown
-            ![XGBoost Precision-Recall Curve](images/xgboost_pr_curve.png)
-            ```
-        * **Tärkeimmät piirteet (paras malli):**
-            ```markdown
-            ![XGBoost Feature Importance](images/xgboost_feature_importance.png)
-            ```
+    * **Mallien vertailu (pylväskaavio):**
+        ```markdown
+        ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
+        ```
+    * **Precision-Recall -käyrä (paras malli):**
+        ```markdown
+        ![XGBoost Precision-Recall Curve](images/xgboost_pr_curve.png)
+        ```
+    * **Tärkeimmät piirteet (paras malli):**
+        ```markdown
+        ![XGBoost Feature Importance](images/xgboost_feature_importance.png)
+        ```
+
 
 * **Nykytila:** Gradient boosting -mallit (XGBoost, LightGBM) ovat osoittautuneet lupaavimmiksi otsonipiikkien ennustamisessa tähän mennessä, 
 saavuttaen hyvän kompromissin piikkien löytämisen ja ennusteiden tarkkuuden välillä (F1 ~0.76-0.77, PR AUC ~0.90). Seuraavaksi suunnitelmissa on 
 kokeilla rekurrentteja neuroverkkoja (LSTM, RNN) ja mahdollisesti syventyä XGBoost/LightGBM-mallien hyperparametrien viritykseen.
-
 
 
 
