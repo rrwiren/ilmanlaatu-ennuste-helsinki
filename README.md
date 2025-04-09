@@ -43,7 +43,6 @@ Raakadata löytyy tämän repositorion `/data/raw/` -kansiosta.
     * [FMI Avoin Data](https://ilmatieteenlaitos.fi/avoin-data)
 	* [FMI havaintojen lataus](https://www.ilmatieteenlaitos.fi/havaintojen-lataus)
 
-* Ladattuna dataa tällä hetkellä **data/raw** kansiossa mm. Helsingin Kaisaniemestä ja Kalliosta O3 ajalta 1.4.2020 - 1.4.2025.
 
 * **Helsingin seudun ympäristöpalvelut (HSY):** Tarjoaa tietoa pääkaupunkiseudun ilmanlaadusta ja mittausasemien dataa.
     * [HSY Ilmanlaatu](https://www.hsy.fi/ilmanlaatu-ja-ilmasto/ilmanlaatu/)
@@ -53,7 +52,7 @@ Raakadata löytyy tämän repositorion `/data/raw/` -kansiosta.
 * **Fintraffic / Digitraffic:** Mahdollisesti liikennedataa.
     * [Digitraffic](https://www.digitraffic.fi/)
 
-*(Tarkemmat datan URL-osoitteet ja kuvaukset lisätään myöhemmin)*
+*(Tarkemmat datan URL-osoitteet ja kuvaukset lisätään projektin edetessä.)*
 
 ## Projektin Rakenne
 
@@ -92,16 +91,26 @@ Tässä on projektin hakemistorakenne:
     pip install -r requirements.txt
     ```
 
-## Käyttö
+**Tärkeimmät kirjastot (lisää `requirements.txt`-tiedostoon):**
 
-* Tutkimusnotebookit löytyvät `notebooks/`-kansiosta.
-* Katso aluksi ainakin EDA skriptit Kaisaniemestä ja Kalliosta.
+* pandas
+* numpy
+* requests
+* matplotlib
+* seaborn
+* statsmodels
+* scikit-learn
+* xgboost
+* lightgbm
+* *(Lisää tensorflow/pytorch, jos/kun käytät LSTM/RNN-malleja)*
+
+*(Luo `requirements.txt`-tiedosto komennolla `pip freeze > requirements.txt` kun olet asentanut tarvittavat kirjastot)*
 
 ## Käyttö
 
 Analyysi ja mallinnus on tehty pääasiassa Jupyter Notebookeissa (`/notebooks`-kansio).
 
-1.  Avaa haluamasi notebook (esim. `EDA_Kallio_Otsoni.ipynb`) Jupyter Notebookissa, JupyterLabissa tai Google Colabissa.
+1.  Avaa haluamasi notebook (esim. ` .ipynb`) Jupyter Notebookissa, JupyterLabissa tai Google Colabissa.
 2.  Suorita solut järjestyksessä. Notebookit sisältävät datan latauksen, esikäsittelyn, analyysin, mallinnuksen ja visualisoinnin vaiheet.
 
 ## Metodologia
