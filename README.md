@@ -72,10 +72,10 @@ Tässä on projektin hakemistorakenne:
 │   └── xgboost_tuned_feature_importance.png
 │
 ├── notebooks/            # Jupyter/Colab Notebookit analyysia ja mallinnusta varten
-│   ├── EDA_Kallio_Otsoni.ipynb	# Uudelleen nimeäminen vielä kesken
-│   ├── EDA_Kaisaniemi_Sää.ipynb	# Uudelleen nimeäminen vielä kesken
-│   ├── Mallinnus_ARIMA_SARIMA.ipynb# Uudelleen nimeäminen vielä kesken
-│   ├── Mallinnus_SARIMAX.ipynb	# Uudelleen nimeäminen vielä kesken
+│   ├── EDA_Kallio_Otsoni.ipynb  	# Uudelleen nimeäminen vielä kesken
+│   ├── EDA_Kaisaniemi_Sää.ipyn  b	# Uudelleen nimeäminen vielä kesken
+│   ├── Mallinnus_ARIMA_SARIMA.i  pynb# Uudelleen nimeäminen vielä kesken
+│   ├── Mallinnus_SARIMAX.ipynb    	# Uudelleen nimeäminen vielä kesken
 │   ├── Mallinnus_LogReg_XGB_LGBM_Vertailu.ipynb # Yhdistetty vertailuajo
 │   ├── Mallinnus_XGBoost_Viritys.ipynb       # XGBoostin viritys
 │   └── ...(Tulevat LSTM/RNN-mallit)...
