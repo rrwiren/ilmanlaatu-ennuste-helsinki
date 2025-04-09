@@ -163,6 +163,22 @@ vakautti mallinnusta.
 * **Nykytila:** Hyperparametreilla viritetty XGBoost-malli antaa tähän mennessä parhaan tasapainon otsonipiikkien ennustamisessa (korkea F1 ja Precision). Seuraavaksi suunnitelmissa on kokeilla rekurrentteja neuroverkkoja (LSTM, 
 RNN) nähdäksemme, voivatko ne oppia aikariippuvuuksia vielä tehokkaammin ja tuottaa parempia tuloksia. Myös LightGBM:n viritys voisi olla harkinnan arvoista.
 
+Hienoa, että hyperparametrien viritys ajoi läpi! 13 minuuttia on ihan kohtuullinen aika RandomizedSearchCV:lle tällä datamäärällä ja iteraatiomäärällä (50). Katsotaanpa, miten paljon tulokset paranivat verrattuna aiempaan 
+XGBoost-ajoon oletusparametreilla.
+
+## Tulosten vertailu: Oletus vs. Viritetty XGBoost
+
+| Metriikka           | XGBoost (Oletus, v4) | XGBoost (Viritetty, v9) | Muutos          | Tulkinta                                                                 |
+| :------------------ | :------------------- | :---------------------- | :-------------- | :----------------------------------------------------------------------- |
+| Accuracy            | 0.9607               | 0.9720                  | +0.0113         | Kokonaistarkkuus parani hieman.                                          |
+| **Precision (Spike)** | 0.6628               | **0.7886** | **+0.1258** | **Merkittävä parannus!** Viritetyn mallin piikkiennusteet ovat paljon useammin oikeita. |
+| **Recall (Spike)** | **0.8862** | 0.8162                  | **-0.0700** | Lasku. Viritetty malli löytää vähemmän kaikista todellisista piikeistä.     |
+| **F1-score (Spike)** | 0.7584               | **0.8022** | **+0.0438** | **Selvä parannus.** Precisionin nousu kompensoi Recallin laskun.           |
+| ROC AUC             | 0.9881               | 0.9881                  | 0.0000          | Yleinen erottelukyky pysyi erinomaisena.                                 |
+| PR AUC              | **0.8998** | 0.8977                  | -0.0021         | Pieni lasku, käytännössä sama. Kertoo hyvästä suorituskyvystä epätasapainossa. |
+
+
+
 
 ## Tulokset ja edellinen tila
 
