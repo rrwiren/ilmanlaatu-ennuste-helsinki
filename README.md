@@ -20,21 +20,28 @@ seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja m
 
 ## Projektin Rakenne
 
+Tässä on projektin hakemistorakenne:
+
+```text
 /ilmanlaatu-ennuste-helsinki/
-|
-├── .gitignore
-├── README.md
-├── data/              # Data (raaka, prosessoitu)
-├── notebooks/         # Jupyter/Databricks notebookit analyyseihin ja mallinnukseen
-├── src/               # Uudelleenkäytettävä lähdekoodi (funktiot, luokat)
-├── reports/           # Raportit, kuvaajat
-└── requirements.txt   # Projektin riippuvuudet
+├── .gitignore          # Gitille ohjeistetut tiedostot, joita ei seurata
+├── README.md           # Tämä tiedosto: projektin kuvaus ja ohjeet
+├── data/               # Data (esim. raaka, prosessoitu)
+│   ├── raw/            # Alkuperäinen data
+│   └── processed/      # Käsitelty data
+├── notebooks/          # Jupyter/Databricks notebookit analyyseihin ja mallinnukseen
+├── src/                # Uudelleenkäytettävä lähdekoodi (funktiot, luokat)
+├── reports/            # Raportit, kuvaajat yms.
+│   └── figures/        # Tallennetut kuvaajat
+└── requirements.txt    # Projektin Python-riippuvuudet
+
+```
 
 ## Asennus
 
 1.  Kloonaa repositorio:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki
     cd ilmanlaatu-ennuste-helsinki
     ```
 2.  (Suositus) Luo virtuaaliympäristö:
@@ -55,5 +62,5 @@ seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja m
 
 ## Kontribuutio
 
-Tämä on henkilökohtainen harjoitusprojekti. Ehdotukset ja kommentit ovat tervetulleita issueiden kautta.
+Tämä on henkilökohtainen harjoitusprojekti. Ehdotukset ja kommentit ovat tervetulleita.
 
