@@ -1,4 +1,4 @@
-'# Ilmanlaadun ennustaminen (harjoitusprojekti Helsingistä)
+## Ilmanlaadun ennustaminen (harjoitusprojekti Helsingistä)
 
 Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja ilmanlaadun ennustamiseksi (Helsingissä).
 
@@ -32,8 +32,16 @@ Aikaväli molemmille datoille on noin **1.4.2020 - 1.4.2025**.
 
 Raakadata löytyy tämän repositorion `/data/raw/` -kansiosta.
 
+Tähän asti käytetty data:
+
 * `Helsinki Kallio 2_ 1.4.2020 - 1.4.2025_... .csv`
 * `Helsinki Kaisaniemi_ 1.4.2020 - 1.4.2025_... .csv`
+
+
+Löytyy dataa myös pidemmältä ajalta:
+
+* `Helsinki Kallio 2_ 1.1.2013 - 31.12.2024_... .csv`  
+* `Helsinki Kaisaniemi_ 1.1.2013 - 31.12..2024_... .csv`
 
 
 ## Tietolähteet (Esimerkkejä / Tutkittavia)
