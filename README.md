@@ -15,11 +15,10 @@ kokeilla erilaisia aikasarja- ja koneoppimismalleja otsonin tai sen piikkien enn
 
 * [Datalähteet](#datalähteet)
 * [Projektin rakenne](#projektin-rakenne)
-* [Asennus ja käyttöönotto](#asennus-ja-käyttöönotto)
 * [Käyttö](#käyttö)
 * [Metodologia](#metodologia)
 * [Tulokset ja nykytila](#tulokset-ja-nykytila)
-* [Lisenssi](#lisenssi)
+
 
 ## Datalähteet
 
@@ -140,6 +139,29 @@ verrattuna jopa yksinkertaisempaan SARIMA-malliin ilman resamplea.
 * **Nykytila:** Projekti on siirtymässä koneoppimismallien kokeiluun (XGBoost, LightGBM, RNN, LSTM) keskittyen erityisesti piikkien ennustamiseen 
 luokittelutehtävänä. Aikasarjamallien (SARIMAX) jatkokehitys vaatisi todennäköisesti tarkempaa mallin järjestyksen viritystä ja mahdollisesti eri 
 lähestymistapaa datan esikäsittelyyn.
+
+
+## Tulokset ja nykytila (päivitetty)
+
+* **EDA:** Alustava analyysi osoittaa selvää vuorokausi- ja vuosittaista kausivaihtelua otsonipitoisuuksissa. Korrelaatioita säämuuttujien 
+(lämpötila, tuulen nopeus, ilmanpaine) kanssa on havaittu.
+* **Aikasarjamallinnus (SARIMAX):**
+    * Datan uudelleenotanta (`resample`) säännölliseen tuntitaajuuteen mahdollisti SARIMAX-mallien ajamisen ilman `NaN`-ennusteita.
+    * Kokeillut SARIMAX-mallit (myös säämuuttujilla ja eri järjestysluvuilla) tuottivat kuitenkin heikon ennustustarkkuuden (korkea RMSE/MAE) 
+verrattuna jopa perus-SARIMA-malliin ilman resamplea.
+    * SARIMAX-mallit **eivät onnistuneet ennustamaan otsonipiikkejä** (arvoja > 90. persentiili).
+* **Koneoppimismallit (Luokittelu):**
+    * Logistinen Regressio (baseline), XGBoost ja LightGBM koulutettiin ennustamaan suoraan piikkejä (`onko_piikki`-muuttuja) käyttäen laajaa 
+joukkoa muokattuja piirteitä (viiveet, aika-piirteet, liukuvat tilastot).
+    * Sekä **XGBoost että LightGBM suoriutuivat merkittävästi Logistista Regressiota ja SARIMAX-malleja paremmin** piikkien tunnistamisessa. Ne 
+saavuttivat korkean Recall-arvon (löysivät n. 89% todellisista piikeistä) ja kohtuullisen Precision-arvon (n. 66-68% piikkiennusteista oli oikeita) 
+testidatalla. PR AUC -arvot olivat myös hyviä (~0.90).
+    * Tärkeimmiksi piirteiksi molemmissa malleissa nousivat edellisten tuntien otsonipitoisuudet ja niiden vaihtelu (liukuvat keskiarvot/hajonnat), 
+mutta myös säämuuttujilla (lämpötila, tuuli, ilmanpaine) ja aika-piirteillä oli vaikutusta.
+* **Nykytila:** Gradient boosting -mallit (XGBoost, LightGBM) vaikuttavat lupaavimmilta tähän mennessä kokeilluilta menetelmiltä otsonipiikkien 
+ennustamiseen. Seuraavaksi suunnitelmissa on kokeilla rekurrentteja neuroverkkoja (LSTM, RNN) ja mahdollisesti syventyä XGBoost/LightGBM-mallien 
+hyperparametrien viritykseen.
+
 
 ## Kontribuutio
 
