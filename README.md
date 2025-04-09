@@ -165,17 +165,21 @@ hyperparametreja (esim. `RandomizedSearchCV`:llä ja `TimeSeriesSplit`-ristiinva
 Feature Importance -kuvaaja).
         * **Luokittelukynnys:** Kokeilemalla eri todennäköisyyskynnysarvoja (oletus 0.5) voitaisiin löytää parempi tasapaino Precisionin ja 
 Recallin välillä tarpeen mukaan.
-    * **Visualisointeja (Esimerkkejä):** *(Nämä ovat samat kuin edellisessä versiossa, päivitä tarvittaessa tiedostonimet)*
 
-        * **Mallien vertailu (pylväskaavio):** *(Lisää tähän kuva, jonka luot Python-koodilla `comparison_df`-taulukosta)*
+Tässä on linkki [yhdistettyyn vertailuskriptiin (LogReg, XGBoost,LightGBM)](notebooks/Colab_Script_Mallien_vertailu_(v2_LogReg,_XGBoost,_LightGBM).ipynb).
+
+
+    * **Visualisointeja (Esimerkkejä):**
+
+        * **Mallien vertailu (pylväskaavio):** 
             ```markdown
             ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
             ```
-        * **Precision-Recall -käyrä (paras malli):** *(Lisää tähän kuva parhaan mallin (esim. XGBoost/LightGBM) PR-käyrästä)*
+        * **Precision-Recall -käyrä (paras malli):** 
             ```markdown
             ![XGBoost Precision-Recall Curve](images/xgboost_pr_curve.png)
             ```
-        * **Tärkeimmät piirteet (paras malli):** *(Lisää tähän kuva parhaan mallin (esim. XGBoost/LightGBM) feature importance -kaaviosta)*
+        * **Tärkeimmät piirteet (paras malli):**
             ```markdown
             ![XGBoost Feature Importance](images/xgboost_feature_importance.png)
             ```
