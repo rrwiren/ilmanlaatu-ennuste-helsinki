@@ -72,10 +72,10 @@ Tässä on projektin hakemistorakenne:
 │   └── xgboost_tuned_feature_importance.png
 │
 ├── notebooks/            # Jupyter/Colab Notebookit analyysia ja mallinnusta varten
-│   ├── EDA_Kallio_Otsoni.ipynb
-│   ├── EDA_Kaisaniemi_Sää.ipynb
-│   ├── Mallinnus_ARIMA_SARIMA.ipynb
-│   ├── Mallinnus_SARIMAX.ipynb
+│   ├── EDA_Kallio_Otsoni.ipynb	# Uudelleen nimeäminen vielä kesken
+│   ├── EDA_Kaisaniemi_Sää.ipynb	# Uudelleen nimeäminen vielä kesken
+│   ├── Mallinnus_ARIMA_SARIMA.ipynb# Uudelleen nimeäminen vielä kesken
+│   ├── Mallinnus_SARIMAX.ipynb	# Uudelleen nimeäminen vielä kesken
 │   ├── Mallinnus_LogReg_XGB_LGBM_Vertailu.ipynb # Yhdistetty vertailuajo
 │   ├── Mallinnus_XGBoost_Viritys.ipynb       # XGBoostin viritys
 │   └── ...(Tulevat LSTM/RNN-mallit)...
@@ -245,10 +245,12 @@ Hyperparametrien viritys ajoi onnistuneesti läpi (~13 min Colabissa). Alla olev
 
     * **Visualisointeja (Viritetty XGBoost):** *(Varmista, että polut ja tiedostonimet ovat oikein repositoriossasi)*
 
-        * **Mallien vertailu (pylväskaavio):**
+        * **Mallien vertailu (pylväskaavio, Default XGBoost):**
           ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
+
         * **Precision-Recall -käyrä (Viritetty XGBoost):**
           ![Viritetty XGBoost Precision-Recall Curve](images/xgboost_tuned_pr_curve.png)
+
         * **Tärkeimmät piirteet (Viritetty XGBoost):**
           ![Viritetty XGBoost Feature Importance](images/xgboost_tuned_feature_importance.png)
 
