@@ -158,12 +158,10 @@ vakautti mallinnusta.
         * Viritetty XGBoost on nyt selvästi paras malli F1-scorella ja Precisionilla mitattuna. Se tekee vähemmän vääriä positiivisia piikkiennusteita.
         * Parannus Precisionissa tuli kuitenkin **Recallin** kustannuksella (0.89 -> 0.82), eli viritetty malli jättää hieman useamman todellisen piikin tunnistamatta. Tämä on tyypillinen kompromissi luokittelussa.
         * Kaikki ML-mallit ovat huomattavasti SARIMAX-yrityksiä parempia tässä piikkien tunnistamistehtävässä.
-    * **Visualisointeja (Viritetty XGBoost):** *(Päivitä tiedostonimet vastaamaan viritetyn mallin tallennettuja kuvia)*
+    * **Visualisointeja (Viritetty XGBoost):** *(Päivitän myöhemmin kunhan ehdin tiedostonimet vastaamaan viritetyn mallin tallennettuja kuvia)*
 
 * **Nykytila:** Hyperparametreilla viritetty XGBoost-malli antaa tähän mennessä parhaan tasapainon otsonipiikkien ennustamisessa (korkea F1 ja Precision). Seuraavaksi suunnitelmissa on kokeilla rekurrentteja neuroverkkoja (LSTM, 
 RNN) nähdäksemme, voivatko ne oppia aikariippuvuuksia vielä tehokkaammin ja tuottaa parempia tuloksia. Myös LightGBM:n viritys voisi olla harkinnan arvoista.
-
-[Tästä -skriptistä](notebooks/XGBoost_Hyperparametrien_Viritys_(Colab_Script_XGBoost_Hyperparametrien_Viritys_(Ajo).ipynb) näet parannetun XGBoostin 
 
 
 ## Tulokset ja edellinen tila
