@@ -13,7 +13,7 @@ seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja m
     * [FMI Avoin Data](https://ilmatieteenlaitos.fi/avoin-data)
 	* [FMI Avoin Data](https://www.ilmatieteenlaitos.fi/havaintojen-lataus)
 
-* **Ladattuna tällä hetkellä -data-raw kansiossa Helsingin Kaisaniemestä ajalta 1.4.2000 - 1.4.2025
+* Ladattuna dataa tällä hetkellä ** data/raw ** kansiossa Helsingin Kaisaniemestä ajalta 1.4.2000 - 1.4.2025
 
 * **Helsingin seudun ympäristöpalvelut (HSY):** Tarjoaa tietoa pääkaupunkiseudun ilmanlaadusta ja mittausasemien dataa.
     * [HSY Ilmanlaatu](https://www.hsy.fi/ilmanlaatu-ja-ilmasto/ilmanlaatu/)
