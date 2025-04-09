@@ -73,7 +73,7 @@ Tässä on projektin hakemistorakenne:
 │
 ├── notebooks/            # Jupyter/Colab Notebookit analyysia ja mallinnusta varten
 │   ├── EDA_Kallio_Otsoni.ipynb  	# Uudelleen nimeäminen vielä kesken
-│   ├── EDA_Kaisaniemi_Sää.ipyn  b	# Uudelleen nimeäminen vielä kesken
+│   ├── EDA_Kaisaniemi_Sää.yn  b	# Uudelleen nimeäminen vielä kesken
 │   ├── Mallinnus_ARIMA_SARIMA.i  pynb# Uudelleen nimeäminen vielä kesken
 │   ├── Mallinnus_SARIMAX.ipynb    	# Uudelleen nimeäminen vielä kesken
 │   ├── Mallinnus_LogReg_XGB_LGBM_Vertailu.ipynb # Yhdistetty vertailuajo
@@ -243,7 +243,7 @@ Hyperparametrien viritys ajoi onnistuneesti läpi (~13 min Colabissa). Alla olev
         | XGBoost (Default)      |     0.9607 |              0.6628 |           0.8862 |             0.7584 |    0.9881 |   0.8998 |
         | Logistic Regression    |     0.9470 |              0.5726 |           0.9409 |             0.7119 |    0.9877 |   0.8849 |
 
-    * **Visualisointeja (Viritetty XGBoost):** *(Varmista, että polut ja tiedostonimet ovat oikein repositoriossasi)*
+    * **Visualisointeja:**
 
         * **Mallien vertailu (pylväskaavio, Default XGBoost):**
           ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
