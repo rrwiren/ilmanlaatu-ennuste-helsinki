@@ -138,6 +138,48 @@ ROC AUC luokitteluun).
 
 ## Tulokset ja nykytila
 
+* **EDA:** Alustava analyysi osoittaa selvää vuorokausi- ja vuosittaista kausivaihtelua otsonipitoisuuksissa sekä korrelaatioita säämuuttujien kanssa. Datan uudelleenotanta (`resample`) säännölliseen tuntitaajuuteen ja interpolointi 
+vakautti mallinnusta.
+* **Aikasarjamallinnus (SARIMAX):** Kokeillut SARIMAX-mallit eivät onnistuneet tuottamaan tarkkoja ennusteita tai tunnistamaan otsonipiikkejä tällä data-asetelmalla.
+* **Koneoppimismallit (Luokittelu - Piikien ennustaminen):**
+    * Logistinen Regressio (baseline), XGBoost (oletusparametreilla) ja LightGBM (oletusparametreilla) koulutettiin käyttäen laajaa joukkoa muokattuja piirteitä (viiveet, aika-piirteet, liukuvat tilastot, yhteisvaikutukset).
+    * **Hyperparametrien viritys:** XGBoost-mallille suoritettiin hyperparametrien viritys käyttäen `RandomizedSearchCV` ja `TimeSeriesSplit`-ristiinvalidointia, optimoiden F1-scorea piikkiluokalle.
+    * **Vertailutaulukko (Testidata):** Alla olevassa taulukossa on yhteenveto mallien suorituskyvystä testidatalla.
+
+        | Malli                  |   Accuracy |   Precision (Spike) |   Recall (Spike) |   F1-score (Spike) |   ROC AUC |   PR AUC |
+        |:-----------------------|-----------:|--------------------:|-----------------:|-------------------:|----------:|---------:|
+        | **XGBoost (Tuned)** | **0.9720** |          **0.7886** |           0.8162 |         **0.8022** |    0.9881 |   0.8977 |
+        | LightGBM (Default)     |     0.9631 |              0.6807 |           0.8862 |             0.77   |    0.9881 |   0.8975 |
+        | XGBoost (Default)      |     0.9607 |              0.6628 |           0.8862 |             0.7584 |    0.9881 |   0.8998 |
+        | Logistic Regression    |     0.9470 |              0.5726 |           0.9409 |             0.7119 |    0.9877 |   0.8849 |
+
+    * **Tulosten tulkinta:**
+        * Hyperparametrien viritys paransi XGBoost-mallin suorituskykyä merkittävästi verrattuna oletusparametreihin, erityisesti **Precision** (0.66 -> 0.79) ja **F1-score** (0.76 -> 0.80) piikeille nousivat selvästi.
+        * Viritetty XGBoost on nyt selvästi paras malli F1-scorella ja Precisionilla mitattuna. Se tekee vähemmän vääriä positiivisia piikkiennusteita.
+        * Parannus Precisionissa tuli kuitenkin **Recallin** kustannuksella (0.89 -> 0.82), eli viritetty malli jättää hieman useamman todellisen piikin tunnistamatta. Tämä on tyypillinen kompromissi luokittelussa.
+        * Kaikki ML-mallit ovat huomattavasti SARIMAX-yrityksiä parempia tässä piikkien tunnistamistehtävässä.
+    * **Visualisointeja (Viritetty XGBoost):** *(Päivitä tiedostonimet vastaamaan viritetyn mallin tallennettuja kuvia)*
+
+        * **Mallien vertailu (pylväskaavio):** *(Lisää tähän kuva, joka sisältää nyt myös viritetyn XGBoostin)*
+            ```markdown
+            ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
+            ```
+        * **Precision-Recall -käyrä (Viritetty XGBoost):**
+            ```markdown
+            ![Viritetty XGBoost Precision-Recall Curve](images/xgboost_tuned_pr_curve.png)
+            ```
+        * **Tärkeimmät piirteet (Viritetty XGBoost):**
+            ```markdown
+            ![Viritetty XGBoost Feature Importance](images/xgboost_tuned_feature_importance.png)
+            ```
+
+* **Nykytila:** Hyperparametreilla viritetty XGBoost-malli antaa tähän mennessä parhaan tasapainon otsonipiikkien ennustamisessa (korkea F1 ja Precision). Seuraavaksi suunnitelmissa on kokeilla rekurrentteja neuroverkkoja (LSTM, 
+RNN) nähdäksemme, voivatko ne oppia aikariippuvuuksia vielä tehokkaammin ja tuottaa parempia tuloksia. Myös LightGBM:n viritys voisi olla harkinnan arvoista.
+
+
+
+## Tulokset ja edellinen tila
+
 * **EDA:** Alustava analyysi osoittaa selvää vuorokausi- ja vuosittaista kausivaihtelua otsonipitoisuuksissa. Korrelaatioita säämuuttujien 
 (lämpötila, tuulen nopeus, ilmanpaine) kanssa on havaittu. Datan uudelleenotanta (`resample`) tunneittaiseen taajuuteen ja interpolointi 
 osoittautui tarpeelliseksi aikasarjamallien vakauden varmistamiseksi, vaikka se saattoikin heikentää SARIMAX-mallien tarkkuutta.
@@ -191,7 +233,6 @@ Recallin välillä tarpeen mukaan.
         
         ![XGBoost Feature Importance](images/xgboost_feature_importance.png)
      
-
 
 * **Nykytila:** Gradient boosting -mallit (XGBoost, LightGBM) ovat osoittautuneet lupaavimmiksi otsonipiikkien ennustamisessa tähän mennessä, 
 saavuttaen hyvän kompromissin piikkien löytämisen ja ennusteiden tarkkuuden välillä (F1 ~0.76-0.77, PR AUC ~0.90). Seuraavaksi suunnitelmissa on 
