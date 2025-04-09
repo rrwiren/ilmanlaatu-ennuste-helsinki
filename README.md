@@ -1,7 +1,6 @@
 # Ilmanlaadun Ennustaminen Helsingissä (Harjoitusprojekti)
 
-Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja ilmanlaadun ennustamiseksi Helsingissä. Projekti on erillinen 
-virallisesta Silo.ai/Ericsson koulutusohjelmasta ja käyttää julkisesti saatavilla olevia tietoja Helsingin alueelta.
+Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja ilmanlaadun ennustamiseksi Helsingissä.
 
 ## Projektin Tavoite
 
