@@ -167,22 +167,22 @@ Feature Importance -kuvaaja).
 Recallin välillä tarpeen mukaan.
 
 
-Tässä on linkki [yhdistettyyn vertailuskriptiin (LogReg, XGBoost, LightGBM)](notebooks/Colab_Script_Mallien_vertailu_(v2_LogReg,_XGBoost,_LightGBM).ipynb).
+[Tästä Colab-skriptistä](notebooks/Colab_Script_Mallien_vertailu_(v2_LogReg,_XGBoost,_LightGBM).ipynb) näet Logistisen Regression, XGBoostin ja LightGBM:n vertailun.
 
 * **Visualisointeja (Esimerkkejä):**
 
     * **Mallien vertailu (pylväskaavio):**
-        ```markdown
+        
         ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
-        ```
+        
     * **Precision-Recall -käyrä (paras malli):**
-        ```markdown
+        
         ![XGBoost Precision-Recall Curve](images/xgboost_pr_curve.png)
-        ```
+        
     * **Tärkeimmät piirteet (paras malli):**
-        ```markdown
+        
         ![XGBoost Feature Importance](images/xgboost_feature_importance.png)
-        ```
+     
 
 
 * **Nykytila:** Gradient boosting -mallit (XGBoost, LightGBM) ovat osoittautuneet lupaavimmiksi otsonipiikkien ennustamisessa tähän mennessä, 
