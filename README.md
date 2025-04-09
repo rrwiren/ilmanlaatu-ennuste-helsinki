@@ -160,22 +160,10 @@ vakautti mallinnusta.
         * Kaikki ML-mallit ovat huomattavasti SARIMAX-yrityksiä parempia tässä piikkien tunnistamistehtävässä.
     * **Visualisointeja (Viritetty XGBoost):** *(Päivitä tiedostonimet vastaamaan viritetyn mallin tallennettuja kuvia)*
 
-        * **Mallien vertailu (pylväskaavio):** *(Lisää tähän kuva, joka sisältää nyt myös viritetyn XGBoostin)*
-            ```markdown
-            ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
-            ```
-        * **Precision-Recall -käyrä (Viritetty XGBoost):**
-            ```markdown
-            ![Viritetty XGBoost Precision-Recall Curve](images/xgboost_tuned_pr_curve.png)
-            ```
-        * **Tärkeimmät piirteet (Viritetty XGBoost):**
-            ```markdown
-            ![Viritetty XGBoost Feature Importance](images/xgboost_tuned_feature_importance.png)
-            ```
-
 * **Nykytila:** Hyperparametreilla viritetty XGBoost-malli antaa tähän mennessä parhaan tasapainon otsonipiikkien ennustamisessa (korkea F1 ja Precision). Seuraavaksi suunnitelmissa on kokeilla rekurrentteja neuroverkkoja (LSTM, 
 RNN) nähdäksemme, voivatko ne oppia aikariippuvuuksia vielä tehokkaammin ja tuottaa parempia tuloksia. Myös LightGBM:n viritys voisi olla harkinnan arvoista.
 
+[Tästä -skriptistä](notebooks/XGBoost_Hyperparametrien_Viritys_(Colab_Script_XGBoost_Hyperparametrien_Viritys_(Ajo).ipynb) näet parannetun XGBoostin 
 
 
 ## Tulokset ja edellinen tila
