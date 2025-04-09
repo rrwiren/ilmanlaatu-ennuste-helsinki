@@ -1,36 +1,30 @@
-## Ilmanlaadun ennustaminen (harjoitusprojekti Helsingistä)
+## Helsingin ilmanlaadun analysointi ja otsonipiikkien ennustaminen
 
-Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja ilmanlaadun ennustamiseksi (Helsingissä).
+Tämä projekti keskittyy Helsingin kaupunki-ilmanlaadun analysointiin, erityisesti korkeiden maanpinnan otsonipitoisuuksien ([O₃]) eli "otsonipiikkien" ennustamiseen. Tavoitteena on tutkia sääolosuhteiden (lämpötila, tuulen nopeus, 
+ilmanpaine) vaikutusta otsonitasoihin ja kehittää sekä arvioida erilaisia aikasarja- ja koneoppimismalleja piikkien ennustamiseksi. Tarkat ennusteet ovat tärkeitä kansanterveydellisten varoitusten antamiseksi ja 
+päästövähennysstrategioiden tehokkuuden arvioimiseksi.
 
-## Projektin Tavoite
-
-Tämä projekti keskittyy Helsingin kaupunki-ilmanlaadun analysointiin ja erityisesti maanpinnan otsonipitoisuuksien ([O₃]) ennustamiseen. 
-Projektissa hyödynnetään FMI:n (Ilmatieteen laitos) avointa dataa Helsingin Kallio 2 (otsoni) ja Kaisaniemi (sää) mittausasemilta aikaväliltä 
-2020-2025.
-
-Projektin tavoitteena on tutkia otsonipitoisuuksiin vaikuttavia tekijöitä, erityisesti sääolosuhteita (lämpötila, tuulen nopeus, ilmanpaine), ja 
-kokeilla erilaisia aikasarja- ja koneoppimismalleja otsonin tai sen piikkien ennustamiseksi.
+Projektissa hyödynnetään Ilmatieteen laitoksen avointa dataa Helsingin Kallio 2 (otsoni) ja Kaisaniemi (sää) mittausasemilta noin aikaväliltä 1.4.2020 - 1.4.2025.
 
 ## Sisällys
 
 * [Datalähteet](#datalähteet)
 * [Projektin rakenne](#projektin-rakenne)
+* [Asennus ja käyttöönotto](#asennus-ja-käyttöönotto)
 * [Käyttö](#käyttö)
 * [Metodologia](#metodologia)
 * [Tulokset ja nykytila](#tulokset-ja-nykytila)
-
+* [Seuraavat askeleet](#seuraavat-askeleet)
 
 ## Datalähteet
 
-Projektissa käytetty data on peräisin Ilmatieteen laitoksen avoimen datan rajapinnasta ja kattaa seuraavat asemat ja aikavälin:
+Projektissa käytetty data on peräisin Ilmatieteen laitoksen avoimen datan rajapinnasta ja ladattu tässä repositoriossa olevaan `/data/raw/`-kansioon.
 
-1.  **Helsinki Kallio 2:** Ilmanlaadun mittausasema. Tästä datasta käytetään erityisesti `Otsoni [µg/m³]` -sarjaa.
-2.  **Helsinki Kaisaniemi:** Säähavaintoasema. Tästä datasta käytetään muuttujia kuten `Lämpötilan keskiarvo [°C]`, `Keskituulen nopeus [m/s]` ja 
-`Ilmanpaineen keskiarvo [hPa]`.
+1.  **Helsinki Kallio 2 (Otsoni):** Ilmanlaadun mittausaseman data (`Helsinki Kallio 2_... .csv`). Tästä datasta käytetään pääasiassa `Otsoni [µg/m³]` -aikasarjaa.
+2.  **Helsinki Kaisaniemi (Sää):** Säähavaintoaseman data (`Helsinki Kaisaniemi_... .csv`). Tästä datasta käytetään ennustavia muuttujia: `Lämpötilan keskiarvo [°C]`, `Keskituulen nopeus [m/s]`, `Ilmanpaineen keskiarvo [hPa]` ja 
+`Tuulen suunnan keskiarvo [°]`.
 
 Aikaväli molemmille datoille on noin **1.4.2020 - 1.4.2025**.
-
-Raakadata löytyy tämän repositorion `/data/raw/` -kansiosta.
 
 Tähän asti käytetty data:
 
@@ -67,16 +61,29 @@ Tässä on projektin hakemistorakenne:
 
 ```text
 /ilmanlaatu-ennuste-helsinki/
-├── .gitignore          # Gitille ohjeistetut tiedostot, joita ei seurata
-├── README.md           # Tämä tiedosto: projektin kuvaus ja ohjeet
-├── data/               # Data (esim. raaka, prosessoitu)
-│   ├── raw/            # Alkuperäinen data
-│   └── processed/      # Käsitelty data
-├── notebooks/          # Jupyter/Databricks notebookit analyyseihin ja mallinnukseen
-├── src/                # Uudelleenkäytettävä lähdekoodi (funktiot, luokat)
-├── reports/            # Raportit, kuvaajat yms.
-│   └── figures/        # Tallennetut kuvaajat
-└── requirements.txt    # Projektin Python-riippuvuudet
+│
+├── data/
+│   ├── raw/              # Alkuperäiset raakadatatiedostot (CSV, XLSX)
+│   └── processed/        # (Valinnainen) Puhdistetut, yhdistetyt, resamplatut datat
+│
+├── images/               # Tallennetut visualisointikuvat README:tä varten
+│   ├── model_comparison_bars.png
+│   ├── xgboost_tuned_pr_curve.png
+│   └── xgboost_tuned_feature_importance.png
+│
+├── notebooks/            # Jupyter/Colab Notebookit analyysia ja mallinnusta varten
+│   ├── EDA_Kallio_Otsoni.ipynb
+│   ├── EDA_Kaisaniemi_Sää.ipynb
+│   ├── Mallinnus_ARIMA_SARIMA.ipynb
+│   ├── Mallinnus_SARIMAX.ipynb
+│   ├── Mallinnus_LogReg_XGB_LGBM_Vertailu.ipynb # Yhdistetty vertailuajo
+│   ├── Mallinnus_XGBoost_Viritys.ipynb       # XGBoostin viritys
+│   └── ...(Tulevat LSTM/RNN-mallit)...
+│
+├── scripts/              # (Valinnainen) Python-skriptit
+│
+├── requirements.txt      # Projektin vaatimat Python-kirjastot
+└── README.md             # Tämä tiedosto
 
 ```
 
@@ -120,53 +127,88 @@ Analyysi ja mallinnus on tehty pääasiassa Jupyter Notebookeissa (`/notebooks`-
 1.  Avaa haluamasi notebook (esim. ` .ipynb`) Jupyter Notebookissa, JupyterLabissa tai Google Colabissa.
 2.  Suorita solut järjestyksessä. Notebookit sisältävät datan latauksen, esikäsittelyn, analyysin, mallinnuksen ja visualisoinnin vaiheet.
 
+
+## Asennus ja käyttöönotto
+
+Projekti käyttää Python 3 -versiota ja useita datatieteen kirjastoja. Suositeltava tapa on luoda virtuaaliympäristö.
+
+1.  **Kloonaa repositorio:**
+    ```bash
+    git clone [https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki.git](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki.git)
+    cd ilmanlaatu-ennuste-helsinki
+    ```
+2.  **(Suositus) Luo ja aktivoi virtuaaliympäristö:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # Linux/macOS
+    # venv\Scripts\activate  # Windows PowerShell
+    # .\venv\Scripts\activate.bat # Windows Cmd
+    ```
+3.  **Asenna vaaditut kirjastot:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+**Tärkeimmät kirjastot (`requirements.txt`):**
+
+* pandas
+* numpy
+* requests
+* matplotlib
+* seaborn
+* statsmodels
+* scikit-learn
+* xgboost
+* lightgbm
+* *(Lisää tensorflow/pytorch, jos/kun käytät LSTM/RNN-malleja)*
+
+*(Muista luoda/päivittää `requirements.txt`-tiedosto: `pip freeze > requirements.txt`)*
+
+## Käyttö
+
+Analyysi ja mallinnus on toteutettu Jupyter Notebookeissa (`/notebooks`-kansio).
+
+1.  Käynnistä Jupyter Notebook tai JupyterLab aktiivisessa virtuaaliympäristössäsi tai avaa notebookit Google Colaboratoryssa.
+2.  Avaa haluamasi notebook (esim. `Mallinnus_LogReg_XGB_LGBM_Vertailu.ipynb`).
+3.  Suorita solut järjestyksessä. Notebookit sisältävät vaiheet datan latauksesta mallien evaluointiin ja visualisointiin.
+
 ## Metodologia
 
-Projekti noudattaa karkeasti CRISP-DM-metodologian vaiheita:
+Projekti etenee karkeasti CRISP-DM-mallin mukaisesti:
 
-1.  **Datan ymmärtäminen:** Datalähteisiin tutustuminen ja eksploratiivinen data-analyysi (EDA) otsonin ja säämuuttujien käyttäytymisen 
-ymmärtämiseksi (trendi, kausivaihtelu, korrelaatiot).
-2.  **Datan valmistelu:** Datan puhdistus, yhdistäminen aikaleiman perusteella, puuttuvien arvojen käsittely, datan uudelleenotanta (`resample`) 
-säännölliseen tuntitaajuuteen ja piirteiden muokkaus (viiveistetty data, aika-piirteet).
-3.  **Mallinnus:** Eri ennustusmenetelmien kokeilu:
-    * **Aikasarjamallit:** ARIMA, SARIMA, SARIMAX (säämuuttujilla).
-    * **Koneoppimismallit (Suunnitteilla/Kokeilussa):** Logistinen Regressio (baseline), XGBoost, LightGBM, RNN, LSTM. Tavoitteena erityisesti 
-otsonipiikkien ennustaminen (luokittelu).
-4.  **Evaluointi:** Mallien suorituskyvyn arviointi käyttäen sopivia metriikoita (RMSE, MAE regressioon; Classification Report, Confusion Matrix, 
-ROC AUC luokitteluun).
-
+1.  **Datan ymmärtäminen:** Tutustuminen Kallion otsoni- ja Kaisaniemen säädataan. Eksploratiivinen data-analyysi (EDA) trendien, kausivaihteluiden, jakaumien ja muuttujien välisten korrelaatioiden tunnistamiseksi.
+2.  **Datan valmistelu:**
+    * Tiedostojen lukeminen ja peruspuhdistus (oikeat koodaukset, desimaalierottimet).
+    * Aikaleimojen luonti ja asettaminen indeksiksi.
+    * Otsoni- ja säädatan yhdistäminen aikaleiman perusteella (`inner join`).
+    * Datan uudelleenotanta (`resample`) säännölliseen tuntitaajuuteen ('h') ja syntyneiden aukkojen täyttäminen interpoloimalla (`interpolate(method='time')`).
+    * Otsonipiikkien määrittely binääriseksi kohdemuuttujaksi (`onko_piikki`) käyttäen 90. persentiilin kynnysarvoa.
+    * Laajan piirrejoukon luonti (Feature Engineering):
+        * Aika-piirteet (tunti, viikonpäivä, kuukausi, vuodenpäivä) syklisesti koodattuna (sin/cos).
+        * Viiveistetyt arvot (lags 1-72h) otsonille ja säämuuttujille.
+        * Liukuvat tilastot (keskiarvo, keskihajonta) otsonille ja osittain säämuuttujille (3-48h ikkunat).
+        * Yhteisvaikutuspiirteet (esim. lämpötila * kellonaika).
+    * Piirteiden nimien puhdistus (erikoismerkkien poisto).
+    * Datan jako opetus- ja testijoukkoihin ajallisesti (viimeiset 15% testaukseen).
+    * Piirteiden skaalaus (`StandardScaler`).
+3.  **Mallinnus:** Eri mallien kokeilu piikkien ennustamiseen:
+    * **Aikasarjamallit:** ARIMA, SARIMA, SARIMAX (osoittautuivat haastaviksi piikkien ennustamisessa tällä datalla/esikäsittelyllä).
+    * **Koneoppimismallit (Luokittelu):**
+        * Logistinen Regressio (perusmalli).
+        * XGBoost (oletusparametreilla ja hyperparametreilla viritettynä).
+        * LightGBM (oletusparametreilla).
+        * **Suunnitteilla:** LSTM, RNN.
+4.  **Evaluointi:** Luokittelumallien arviointi käyttäen:
+    * Classification Report (Precision, Recall, F1-score erityisesti piikki-luokalle).
+    * Confusion Matrix.
+    * ROC AUC.
+    * Precision-Recall AUC (erityisen relevantti epätasapainoiselle datalle).
 
 ## Tulokset ja nykytila
 
-* **EDA:** Alustava analyysi osoittaa selvää vuorokausi- ja vuosittaista kausivaihtelua otsonipitoisuuksissa sekä korrelaatioita säämuuttujien kanssa. Datan uudelleenotanta (`resample`) säännölliseen tuntitaajuuteen ja interpolointi 
-vakautti mallinnusta.
-* **Aikasarjamallinnus (SARIMAX):** Kokeillut SARIMAX-mallit eivät onnistuneet tuottamaan tarkkoja ennusteita tai tunnistamaan otsonipiikkejä tällä data-asetelmalla.
-* **Koneoppimismallit (Luokittelu - Piikien ennustaminen):**
-    * Logistinen Regressio (baseline), XGBoost (oletusparametreilla) ja LightGBM (oletusparametreilla) koulutettiin käyttäen laajaa joukkoa muokattuja piirteitä (viiveet, aika-piirteet, liukuvat tilastot, yhteisvaikutukset).
-    * **Hyperparametrien viritys:** XGBoost-mallille suoritettiin hyperparametrien viritys käyttäen `RandomizedSearchCV` ja `TimeSeriesSplit`-ristiinvalidointia, optimoiden F1-scorea piikkiluokalle.
-    * **Vertailutaulukko (Testidata):** Alla olevassa taulukossa on yhteenveto mallien suorituskyvystä testidatalla.
+### Tulosten vertailu: Oletus vs. Viritetty XGBoost
 
-        | Malli                  |   Accuracy |   Precision (Spike) |   Recall (Spike) |   F1-score (Spike) |   ROC AUC |   PR AUC |
-        |:-----------------------|-----------:|--------------------:|-----------------:|-------------------:|----------:|---------:|
-        | **XGBoost (Tuned)** | **0.9720** |          **0.7886** |           0.8162 |         **0.8022** |    0.9881 |   0.8977 |
-        | LightGBM (Default)     |     0.9631 |              0.6807 |           0.8862 |             0.77   |    0.9881 |   0.8975 |
-        | XGBoost (Default)      |     0.9607 |              0.6628 |           0.8862 |             0.7584 |    0.9881 |   0.8998 |
-        | Logistic Regression    |     0.9470 |              0.5726 |           0.9409 |             0.7119 |    0.9877 |   0.8849 |
-
-    * **Tulosten tulkinta:**
-        * Hyperparametrien viritys paransi XGBoost-mallin suorituskykyä merkittävästi verrattuna oletusparametreihin, erityisesti **Precision** (0.66 -> 0.79) ja **F1-score** (0.76 -> 0.80) piikeille nousivat selvästi.
-        * Viritetty XGBoost on nyt selvästi paras malli F1-scorella ja Precisionilla mitattuna. Se tekee vähemmän vääriä positiivisia piikkiennusteita.
-        * Parannus Precisionissa tuli kuitenkin **Recallin** kustannuksella (0.89 -> 0.82), eli viritetty malli jättää hieman useamman todellisen piikin tunnistamatta. Tämä on tyypillinen kompromissi luokittelussa.
-        * Kaikki ML-mallit ovat huomattavasti SARIMAX-yrityksiä parempia tässä piikkien tunnistamistehtävässä.
-    * **Visualisointeja (Viritetty XGBoost):** *(Päivitän myöhemmin kunhan ehdin tiedostonimet vastaamaan viritetyn mallin tallennettuja kuvia)*
-
-* **Nykytila:** Hyperparametreilla viritetty XGBoost-malli antaa tähän mennessä parhaan tasapainon otsonipiikkien ennustamisessa (korkea F1 ja Precision). Seuraavaksi suunnitelmissa on kokeilla rekurrentteja neuroverkkoja (LSTM, 
-RNN) nähdäksemme, voivatko ne oppia aikariippuvuuksia vielä tehokkaammin ja tuottaa parempia tuloksia. Myös LightGBM:n viritys voisi olla harkinnan arvoista.
-
-Hienoa, että hyperparametrien viritys ajoi läpi! 13 minuuttia on ihan kohtuullinen aika RandomizedSearchCV:lle tällä datamäärällä ja iteraatiomäärällä (50). Katsotaanpa, miten paljon tulokset paranivat verrattuna aiempaan 
-XGBoost-ajoon oletusparametreilla.
-
-## Tulosten vertailu: Oletus vs. Viritetty XGBoost
+Hyperparametrien viritys ajoi onnistuneesti läpi (~13 min Colabissa). Alla oleva taulukko vertaa viritetyn XGBoost-mallin (`v9`) suorituskykyä aiempaan oletusparametreilla ajettuun versioon (`v4`) testidatalla:
 
 | Metriikka           | XGBoost (Oletus, v4) | XGBoost (Viritetty, v9) | Muutos          | Tulkinta                                                                 |
 | :------------------ | :------------------- | :---------------------- | :-------------- | :----------------------------------------------------------------------- |
@@ -177,84 +219,49 @@ XGBoost-ajoon oletusparametreilla.
 | ROC AUC             | 0.9881               | 0.9881                  | 0.0000          | Yleinen erottelukyky pysyi erinomaisena.                                 |
 | PR AUC              | **0.8998** | 0.8977                  | -0.0021         | Pieni lasku, käytännössä sama. Kertoo hyvästä suorituskyvystä epätasapainossa. |
 
+**Johtopäätökset parannuksista:**
 
+* **Onnistunut viritys:** Hyperparametrien viritys oli ehdottomasti hyödyllistä!
+* **Precisionin merkittävä kasvu:** Suurin parannus nähtiin Precisionissa piikeille. Tämä tarkoittaa, että kun viritetty malli ennustaa piikin, voit olla huomattavasti varmempi sen oikeellisuudesta kuin oletusmallilla.
+* **Recallin kustannuksella:** Parantunut Precision tuli kuitenkin Recallin kustannuksella. Malli on nyt "varovaisempi" ennustamaan piikkejä, joten se löytää niistä hieman pienemmän osan kuin aiemmin.
+* **Parempi tasapaino (F1):** F1-score, joka mittaa Precisionin ja Recallin tasapainoa, parani selvästi. Tämä viittaa siihen, että kokonaisuutena viritetty malli on parempi kompromissi piikkien tunnistamisessa.
+* **PR AUC:** Pieni lasku PR AUC:ssa voi johtua siitä, että optimoimme F1-scorea ristiinvalidioinnissa, ja se painotti Precisionia hieman enemmän Recallin kustannuksella tässä tapauksessa.
 
+---
 
-## Tulokset ja edellinen tila
+* **EDA:** Tunnistettu selkeät vuorokausi- ja vuosittaiset syklit otsonipitoisuuksissa. Säämuuttujilla havaittu odotettuja korrelaatioita.
+* **SARIMAX:** Vaikka datan uudelleenotanta mahdollisti mallien ajamisen ilman NaN-ennusteita, niiden ennustustarkkuus jäi heikoksi, eivätkä ne tunnistaneet piikkejä.
+* **ML-luokittelijat (Yhteenveto):**
+    * **Gradient Boosting -mallit (XGBoost, LightGBM) suoriutuivat selvästi parhaiten** piikkien ennustamisessa verrattuna Logistiseen Regressioon ja SARIMAX-malleihin.
+    * **Hyperparametreilla viritetty XGBoost** antoi parhaan F1-scoren ja Precisionin piikeille, mutta hieman matalamman Recallin kuin oletusmallit.
+    * **Kaikkien testattujen ML-mallien vertailutaulukko (Testidata):**
 
-* **EDA:** Alustava analyysi osoittaa selvää vuorokausi- ja vuosittaista kausivaihtelua otsonipitoisuuksissa. Korrelaatioita säämuuttujien 
-(lämpötila, tuulen nopeus, ilmanpaine) kanssa on havaittu. Datan uudelleenotanta (`resample`) tunneittaiseen taajuuteen ja interpolointi 
-osoittautui tarpeelliseksi aikasarjamallien vakauden varmistamiseksi, vaikka se saattoikin heikentää SARIMAX-mallien tarkkuutta.
-* **Aikasarjamallinnus (SARIMAX):** Kokeillut SARIMAX-mallit (myös säämuuttujilla ja eri järjestysluvuilla) tuottivat numeerisia ennusteita 
-uudelleenotetulla datalla, mutta niiden tarkkuus (RMSE/MAE) jäi heikoksi eivätkä ne onnistuneet ennustamaan otsonipiikkejä (arvoja > 90. 
-persentiili).
-* **Koneoppimismallit (Luokittelu - Piikien ennustaminen):**
-    * Logistinen Regressio (baseline), XGBoost ja LightGBM koulutettiin ennustamaan suoraan piikkejä (`onko_piikki`-muuttuja) käyttäen laajaa 
-joukkoa muokattuja piirteitä (viiveet, aika-piirteet, liukuvat tilastot).
-    * **Vertailutaulukko (Testidata):** Alla olevassa taulukossa on yhteenveto mallien suorituskyvystä testidatalla. Metriikat keskittyvät 
-erityisesti piikkien (luokka 1) tunnistamiseen:
+        | Malli                  |   Accuracy |   Precision (Spike) |   Recall (Spike) |   F1-score (Spike) |   ROC AUC |   PR AUC |
+        |:-----------------------|-----------:|--------------------:|-----------------:|-------------------:|----------:|---------:|
+        | **XGBoost (Tuned)** | **0.9720** |          **0.7886** |           0.8162 |         **0.8022** |    0.9881 |   0.8977 |
+        | LightGBM (Default)     |     0.9631 |              0.6807 |           0.8862 |             0.77   |    0.9881 |   0.8975 |
+        | XGBoost (Default)      |     0.9607 |              0.6628 |           0.8862 |             0.7584 |    0.9881 |   0.8998 |
+        | Logistic Regression    |     0.9470 |              0.5726 |           0.9409 |             0.7119 |    0.9877 |   0.8849 |
 
-        | Malli               |   Accuracy |   Precision (Spike) |   Recall (Spike) |   F1-score (Spike) |   ROC AUC |   PR AUC |
-        |:--------------------|-----------:|--------------------:|-----------------:|-------------------:|----------:|---------:|
-        | XGBoost             |     0.9607 |              0.6628 |           0.8862 |             0.7584 |    0.9881 |   0.8998 |
-        | LightGBM            |     0.9631 |              0.6807 |           0.8862 |             0.77   |    0.9881 |   0.8975 |
-        | Logistic Regression |     0.9470 |              0.5726 |           0.9409 |             0.7119 |    0.9877 |   0.8849 |
+    * **Visualisointeja (Viritetty XGBoost):** *(Varmista, että polut ja tiedostonimet ovat oikein repositoriossasi)*
 
-    * **Tulosten tulkinta:**
-        * **Gradient Boosting -mallit (XGBoost & LightGBM) suoriutuivat selvästi Logistista Regressiota paremmin** tärkeimmissä piikkien 
-tunnistamiseen liittyvissä metriikoissa (F1-score, PR AUC). Niiden yleinen tarkkuus (Accuracy) oli myös hieman korkeampi.
-        * **XGBoost ja LightGBM olivat hyvin tasaväkisiä.** LightGBM saavutti hieman paremman Precisionin (tarkkuus piikkiennusteissa) ja 
-F1-scoren, kun taas XGBoostilla oli aavistuksen parempi PR AUC (Precision-Recall -käyrän alle jäävä pinta-ala, hyvä metriikka epätasapainoiselle 
-datalle). Molemmat löysivät noin 89% kaikista todellisista piikeistä (korkea Recall).
-        * **Logistinen Regressio** löysi suurimman osan piikeistä (korkein Recall, 94%), mutta teki sen kustannuksella, että se ennusti useammin 
-piikkiä silloinkin, kun sitä ei ollut (matalin Precision, 57%).
-        * Kaikkien mallien **ROC AUC** oli erittäin korkea (>0.98), mikä kertoo hyvästä yleisestä kyvystä erotella piikit ja ei-piikit toisistaan, 
-mutta PR AUC ja F1-score ovat usein informatiivisempia epätasapainoisessa luokittelussa.
-    * **Parannusehdotuksia:**
-        * **Hyperparametrien viritys:** Sekä XGBoostin että LightGBM:n tuloksia voitaisiin todennäköisesti parantaa virittämällä niiden 
-hyperparametreja (esim. `RandomizedSearchCV`:llä ja `TimeSeriesSplit`-ristiinvalidioinnilla).
-        * **Piirteiden muokkaus:** Voisiko uusia, informatiivisempia piirteitä vielä luoda? Tai voisiko vähemmän tärkeitä piirteitä poistaa? (Katso 
-Feature Importance -kuvaaja).
-        * **Luokittelukynnys:** Kokeilemalla eri todennäköisyyskynnysarvoja (oletus 0.5) voitaisiin löytää parempi tasapaino Precisionin ja 
-Recallin välillä tarpeen mukaan.
+        * **Mallien vertailu (pylväskaavio):**
+          ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
+        * **Precision-Recall -käyrä (Viritetty XGBoost):**
+          ![Viritetty XGBoost Precision-Recall Curve](images/xgboost_tuned_pr_curve.png)
+        * **Tärkeimmät piirteet (Viritetty XGBoost):**
+          ![Viritetty XGBoost Feature Importance](images/xgboost_tuned_feature_importance.png)
 
+* **Nykytila:** Viritetty XGBoost on tähän mennessä paras malli otsonipiikkien ennustamiseen tässä projektissa. Laaja piirrejoukko, joka sisältää viiveistettyjä arvoja, aika-piirteitä ja liukuvia tilastoja, osoittautui 
+hyödylliseksi. Erityisesti edellisten tuntien otsonipitoisuudet ja niiden vaihtelu ovat tärkeitä ennustajia.
 
-[Tästä -skriptistä](notebooks/Colab_Script_Mallien_vertailu_(v2_LogReg,_XGBoost,_LightGBM).ipynb) näet Logistisen Regression, XGBoostin ja LightGBM:n vertailun.
+## Seuraavat askeleet
 
-* **Visualisointeja:**
+* **LSTM/RNN-mallien kokeilu:** Tutkia, pystyvätkö rekurrentit neuroverkot oppimaan aikariippuvuuksia eri tavalla ja saavuttamaan parempia tuloksia.
+* **LightGBM:n viritys:** Voisiko LightGBM:n suorituskykyä parantaa hyperparametrien virityksellä XGBoostin tasolle tai jopa paremmaksi?
+* **Piirteiden valinta/karsinta:** Analysoida tarkemmin piirteiden tärkeyttä ja kokeilla poistaa vähemmän tärkeitä piirteitä mallien yksinkertaistamiseksi.
+* **Luokittelukynnysarvon optimointi:** Säätää todennäköisyyskynnystä parhaan Precision/Recall-tasapainon löytämiseksi viritetylle XGBoost-mallille.
 
-    * **Mallien vertailu (pylväskaavio):**
-        
-        ![Mallien vertailu (avainmetriikat)](images/model_comparison_bars.png)
-        
-    * **Precision-Recall -käyrä (paras malli):**
-        
-        ![XGBoost Precision-Recall Curve](images/xgboost_pr_curve.png)
-        
-    * **Tärkeimmät piirteet (paras malli):**
-        
-        ![XGBoost Feature Importance](images/xgboost_feature_importance.png)
-     
-
-* **Nykytila:** Gradient boosting -mallit (XGBoost, LightGBM) ovat osoittautuneet lupaavimmiksi otsonipiikkien ennustamisessa tähän mennessä, 
-saavuttaen hyvän kompromissin piikkien löytämisen ja ennusteiden tarkkuuden välillä (F1 ~0.76-0.77, PR AUC ~0.90). Seuraavaksi suunnitelmissa on 
-kokeilla rekurrentteja neuroverkkoja (LSTM, RNN) ja mahdollisesti syventyä XGBoost/LightGBM-mallien hyperparametrien viritykseen.
-
-
-
-
-## Edelliset tulokset ja alkumetrit...
-
-* **EDA:** Alustava analyysi osoittaa selvää vuorokausi- ja vuosittaista kausivaihtelua otsonipitoisuuksissa. Korrelaatioita säämuuttujien kanssa 
-on havaittu (yksityiskohdat EDA-notebookeissa).
-* **Aikasarjamallinnus (SARIMAX):**
-    * Datan uudelleenotanta (`resample`) säännölliseen tuntitaajuuteen mahdollisti SARIMAX-mallien ajamisen ilman `NaN`-ennusteita.
-    * Kokeillut SARIMAX-mallit (myös säämuuttujilla) tuottivat numeerisia ennusteita, mutta niiden tarkkuus (RMSE/MAE) ei ollut optimaalinen 
-verrattuna jopa yksinkertaisempaan SARIMA-malliin ilman resamplea.
-    * Mallit eivät onnistuneet ennustamaan otsonipiikkejä (korkeita pitoisuuksia > 90. persentiili).
-* **Nykytila:** Projekti on siirtymässä koneoppimismallien kokeiluun (XGBoost, LightGBM, RNN, LSTM) keskittyen erityisesti piikkien ennustamiseen 
-luokittelutehtävänä. Aikasarjamallien (SARIMAX) jatkokehitys vaatisi todennäköisesti tarkempaa mallin järjestyksen viritystä ja mahdollisesti eri 
-lähestymistapaa datan esikäsittelyyn.
 
 
 ## Kontribuutio
