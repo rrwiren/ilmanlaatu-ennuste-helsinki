@@ -5,7 +5,7 @@ Tämä on harjoitusprojekti, jonka tavoitteena on tutkia ja kehittää malleja i
 ## Projektin Tavoite
 
 Kehittää koneoppimismalli ennustamaan tiettyjen ilmansaasteiden (esim. PM2.5, PM10, NO2, O3) pitoisuuksia Helsingissä tulevaisuudessa (esim. 
-seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja mahdollisesti liikennedataa. (tällä hetkellä vain FMI dataa)
+seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja mahdollisesti liikennedataa. (tällä hetkellä vain FMI dataa..)
 
 ## Tietolähteet (Esimerkkejä / Tutkittavia)
 
@@ -17,6 +17,8 @@ seuraavan 1-24 tunnin aikana) käyttäen historiallista ilmanlaatu-, sää- ja m
 
 * **Helsingin seudun ympäristöpalvelut (HSY):** Tarjoaa tietoa pääkaupunkiseudun ilmanlaadusta ja mittausasemien dataa.
     * [HSY Ilmanlaatu](https://www.hsy.fi/ilmanlaatu-ja-ilmasto/ilmanlaatu/)
+    * [Ilmanlaatu PK-seudulla](https://www.hsy.fi/ilmanlaatu-ja-ilmasto/ilmanlaatu-paakaupunkiseutu/ilmansaasteiden-pitoisuudet/)
+
 * **Fintraffic / Digitraffic:** Mahdollisesti liikennedataa.
     * [Digitraffic](https://www.digitraffic.fi/)
 
@@ -65,5 +67,5 @@ Tässä on projektin hakemistorakenne:
 
 ## Kontribuutio
 
-Tämä on henkilökohtainen harjoitusprojekti. Ehdotukset ja kommentit ovat tervetulleita.
+Tämä on henkilökohtainen harjoitusprojekti. Ehdotukset ja kommentit ovat tervetulleita, kiitos.
 
