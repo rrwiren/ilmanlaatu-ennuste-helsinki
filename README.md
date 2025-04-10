@@ -16,6 +16,48 @@ Projektissa hyödynnetään Ilmatieteen laitoksen avointa dataa Helsingin Kallio
 * [Tulokset ja nykytila](#tulokset-ja-nykytila)
 * [Seuraavat askeleet](#seuraavat-askeleet)
 
+---
+
+## Päivitys 10.4.2025: Mallien vertailu ja Luokittelukokeilu
+
+Tänään keskityttiin eri mallien testaamiseen ja GRU-mallin parantamiseen korkeiden otsonipitoisuuksien ennustamiseksi.
+
+**1. Datan Päivitys:**
+* Otettiin käyttöön uudempi data ajanjaksolta 1.4.2024 - 1.4.2025.
+* Dataan lisättiin **Pilvisyys (okta)** -ominaisuus.
+* Uusi käsitelty tiedosto: `data/processed/processed_Helsinki_O3_Weather_Cloudiness_2024_2025_v3.parquet`.
+* Esikäsittelyskripti: `notebooks/Colab_Script_Datan_Esikäsittely_ja_Tallennus.ipynb` (tai päivitetty versio).
+
+**2. Kokeillut Mallit:**
+* **ARIMA(1,0,0):** Parempi kuin baseline (RMSE ~15.4), mutta ei tunnistanut yhtään korkeaa jaksoa (Recall=0 @ 85µg/m³). Ennusteet tuottivat NaN-arvoja `.get_forecast()`-metodilla, mutta `.predict()` toimi.
+* **SARIMAX(1,0,1)x(1,1,1,24):** Tilastollisesti hyvä sovite harjoitusdataan (matala AIC/BIC, hyvät residuaalit), mutta testijakson yleistarkkuus heikompi kuin ARIMA(1,0,0) (RMSE ~19.7). Ei tunnistanut yhtään korkeaa jaksoa 
+(Recall=0 @ 85µg/m³). Käytti `.predict()`-metodia.
+* **GRU/LSTM (Regressio, perus FE):** GRU hieman LSTM:ää parempi yleistarkkuudessa (RMSE ~13.6). GRU tunnisti muutaman korkean jakson (Recall ~6.5% @ 85µg/m³), LSTM ei yhtään. Ennusteet melko sileitä.
+* **GRU (Luokittelu, Laajennettu FE):** Ongelma muotoiltiin binääriluokitteluksi (ennustaako max 8h ka > 85 µg/m³ seuraavan 24h aikana). Käytettiin laajennettua ominaisuusmuokkausta (sykliset aika/tuuli, viiveet, liukuvat tilastot 
+-> 44 ominaisuutta) ja luokkaepätasapainon painotusta.
+    * **Paras Tulos:** Saavutettiin **Recall = 1.00 (100%)** ja **Precision = 0.50 (50%)** käyttämällä päätöskynnystä 0.95. Malli siis löysi kaikki testijakson ylitykset, mutta puolet sen antamista hälytyksistä oli vääriä. AUC ROC 
+oli erinomainen (0.998).
+    * **Notebook:** `notebooks/GRU_2025-04-11_0001.ipynb`
+
+**3. Johtopäätökset:**
+* Luokittelumalli GRU:lla ja laajennetuilla ominaisuuksilla on tähän mennessä lupaavin lähestymistapa varoitustavoitteen kannalta, saavuttaen täydellisen herkkyyden (Recall) 85 µg/m³ rajalle.
+* Haasteena on edelleen väärien hälytysten vähentäminen (Precisionin nostaminen).
+* Pelkät tilastolliset mallit (ARIMA/SARIMAX testatuilla asetuksilla) eivät tunnistaneet korkeita jaksoja.
+* Laajennettu ominaisuusmuokkaus vaikutti positiivisesti Recalliin neuroverkolla, mutta heikensi yleistä RMSE/MAE-tarkkuutta regressiossa.
+
+**4. Seuraavat Askeleet (Ehdotuksia):**
+* **Paranna GRU-luokittelijaa:** Kokeile hyperparametrien viritystä tai ominaisuuksien karsintaa Precisionin parantamiseksi.
+* **Kokeile LSTM:** Aja LSTM-malli samalla luokitteluasetelmalla ja laajennetuilla ominaisuuksilla vertailun vuoksi.
+* **Testaa 120 µg/m³ raja:** Yritä kouluttaa luokittelija viralliselle raja-arvolle (tiedostaen äärimmäisen epätasapainon).
+* **XGBoost/LightGBM:** Kokeile puupohjaisia malleja laajennetuilla ominaisuuksilla.
+* **Sääennusteet:** Integroi *tulevaisuuden* sääennusteiden käyttö varsinaiseen ennusteprosessiin.
+* **Tukholman Data:** Ota käyttöön ja sovella opittuja menetelmiä lopulliseen kohdedataan.
+
+---
+
+
+
+
 ## Datalähteet
 
 Projektissa käytetty data on peräisin Ilmatieteen laitoksen avoimen datan rajapinnasta ja ladattu tässä repositoriossa olevaan `/data/raw/`-kansioon.
