@@ -18,6 +18,53 @@ Projektissa hyödynnetään Ilmatieteen laitoksen avointa dataa Helsingin Kallio
 
 ---
 
+## Pipeline-lähestymistapa (Versio 0.5)
+
+**Päivitys 12.4.2025:** Projektiin on luotu uusi, yhtenäistetty pipeline-rakenne (versio 0.5) datan käsittelyyn ja perusmallinnukseen. Tämä parantaa työnkulun toistettavuutta ja hallintaa.
+
+**Pipeline-koodi:**
+
+Viimeisin versio (v0.5) pipeline-skriptistä/notebookista löytyy `pipeline_notebooks`-kansiosta:
+
+* [PIPELINE_v0.5_ESIKÄSITTELY, EDA_PIIRTEET_BASELINE.ipynb](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.5_ESIK%C3%84SITTELY%2C_EDA_PIIRTEET_BASELINE.ipynb)
+
+Tämä pipeline kattaa seuraavat vaiheet:
+1.  Raakadatan lataus (FMI Kaisaniemi sää & Kallio 2 ilmanlaatu).
+2.  Esikäsittely ja yhdistäminen.
+3.  EDA (sis. visualisoinnit, korrelaatiot, siivous).
+4.  Aikaan perustuvien piirteiden luonti (lineaariset & sykliset).
+5.  Datan kronologinen jako opetus-/testijoukkoihin.
+6.  Baseline-mallin (Lineaarinen Regressio aika-piirteillä) koulutus & evaluointi.
+
+**Valmiiksi Käsitelty Data:**
+
+Pipeline (v0.5) tuottaa Parquet-tiedoston, joka sisältää täysin käsitellyn, siivotun ja piirteillä täydennetyn tuntitason datan (noin huhtikuu 2023 - huhtikuu 2025).
+
+* **Tiedosto:** `Helsinki_Data_With_Features_Pipeline_v0.5.parquet`
+* **Sijainti:** [`data/processed/`](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/tree/main/data/processed)
+* **Suora linkki tiedostoon:** [Helsinki_Data_With_Features_Pipeline_v0.5.parquet](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/data/processed/Helsinki_Data_With_Features_Pipeline_v0.5.parquet) (Huom: GitHub 
+näyttää vain tiedoston tiedot, lataus vaatii muita työkaluja tai "Download"-napin käyttöä sivulla)
+
+**Suositus jatkotyöskentelyyn:**
+
+On **vahvasti suositeltavaa** käyttää yllä mainittua `.parquet`-tiedostoa lähtökohtana kaikessa jatkomallinnuksessa (esim. XGBoost, LSTM). Tämä nopeuttaa työtä merkittävästi.
+
+Voit ladata datan Pandasilla esimerkiksi näin:
+
+```python
+import pandas as pd
+
+parquet_path = "data/processed/Helsinki_Data_With_Features_Pipeline_v0.5.parquet"
+# Varmista, että ajat koodin repositorion juuresta tai muokkaa polkua tarvittaessa
+try:
+    df = pd.read_parquet(parquet_path)
+    print("Data ladattu onnistuneesti!")
+    print(df.info())
+except FileNotFoundError:
+    print(f"Virhe: Tiedostoa ei löytynyt polusta '{parquet_path}'. Tarkista polku.")
+
+
+
 ## Päivitys 10.4.2025: Mallien vertailu ja Luokittelukokeilu
 
 Tänään keskityttiin eri mallien testaamiseen ja GRU-mallin parantamiseen korkeiden otsonipitoisuuksien ennustamiseksi.
