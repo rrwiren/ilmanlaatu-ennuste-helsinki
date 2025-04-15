@@ -50,6 +50,24 @@ ilmanlaatu-ennuste-helsinki/
 └── README.md       # Tämä tiedosto
 ```
 
+**Tulokset: Mallien Vertailu**
+Suorituskykymetriikat (Testisetti)
+Tähän mennessä (15.4.2025) testattujen mallien suorituskyky testidatalla (noin Nov 2024 - Huhti 2025).
+
+| Malli                          | MAE    | RMSE   | R²     | Kommentti                                    |
+| :----------------------------- | :----- | :----- | :----- | :------------------------------------------- |
+| Baseline (LR v0.5, aika)       | 12.804 | 16.872 | 0.331  | Käyttää vain aikaan perustuvia piirteitä.     |
+| XGBoost (v0.6, kaikki piirteet)| 8.807  | 10.764 | 0.565  | Merkittävä parannus baselineen.             |
+| Prophet (v0.7, ei regressoreita)| 24.935 | 30.108 | -2.402 | Suoriutui erittäin heikosti (vuositt. kausiv. puuttui). |
+
+**Analyysi Tuloksista**
+Baseline (Lineaarinen Regressio): Toimii perustasona. Selittää noin 33% otsonin vaihtelusta pelkän ajan avulla.
+XGBoost (v0.6): Hyödyntämällä kaikkia piirteitä saavutti merkittävästi paremman suorituskyvyn (R² ≈ 0.57). Piirteiden tärkeysanalyysi (notebook v0.6) nosti esiin vuoden- ja vuorokaudenajat sekä NO2/NO-pitoisuudet.
+Prophet (v0.7): Perus-Prophet epäonnistui tällä datalla (negatiivinen R²), todennäköisesti liian lyhyen datahistorian (&lt; 2v) vuoksi, jolloin vuosittainen kausivaihtelu jäi mallintamatta.
+Johtopäätös: Tähän mennessä XGBoost on ollut selvästi tarkin malli hyödyntäessään kaikkia saatavilla olevia piirteitä.
+
+
+
 **Valmiiksi Käsitelty Data (v0.5):**
 
 Esikäsittelyn, EDA:n ja peruspiirteiden muokkauksen tuloksena syntynyt data on tallennettu ja sitä **suositellaan käytettäväksi mallinnuksen lähtökohtana**:
