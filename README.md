@@ -29,11 +29,9 @@ Tähänastiset pipeline-vaiheet ja mallikokeilut löytyvät notebookeista `pipel
 * **v0.5:** [Peruspipeline (Esikäsittely, EDA, Piirteet, Baseline 
 LR)](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.5_ESIK%C3%84SITTELY%2C_EDA_PIIRTEET_BASELINE.ipynb)
 * **v0.6:** [XGBoost-malli (Koulutus & Evaluointi, 
-FI)](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.6_XGBOOST_fixed_no_es.ipynb) *(Tarkista/korjaa tiedostonimi 
-tarvittaessa)*
+FI)](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.6_XGBOOST_fixed_no_es.ipynb)
 * **v0.7:** [Prophet-malli (Koulutus & 
-Evaluointi)](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.7_PROPHET_TRAINING_fixed_version.ipynb) *(Tarkista/korjaa 
-tiedostonimi tarvittaessa)*
+Evaluointi)](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.7_PROPHET_TRAINING_fixed_version.ipynb)
 
 Pipeline kattaa tyypillisesti seuraavat vaiheet: data -> esikäsittely -> EDA -> piirteet -> jako -> malli -> evaluointi -> (tallennus).
 
