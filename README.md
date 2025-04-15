@@ -115,7 +115,7 @@ try:
 except FileNotFoundError:
     print(f"Virhe: Tiedostoa ei löytynyt polusta '{parquet_path}'. Tarkista polku.")
 
-
+```
 
 ## Päivitys 10.4.2025: Mallien vertailu ja Luokittelukokeilu
 
