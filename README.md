@@ -50,7 +50,7 @@ Lataus Pandasilla:
 import pandas as pd
 df = pd.read_parquet("data/processed/Helsinki_Data_With_Features_Pipeline_v0.5.parquet")
 
-
+```
 
 
 
