@@ -50,6 +50,7 @@ ilmanlaatu-ennuste-helsinki/
 └── README.md       # Tämä tiedosto
 ```
 
+
 **Tulokset: Mallien Vertailu**
 Suorituskykymetriikat (Testisetti)
 Tähän mennessä (15.4.2025) testattujen mallien suorituskyky testidatalla (noin Nov 2024 - Huhti 2025).
@@ -66,6 +67,16 @@ XGBoost (v0.6): Hyödyntämällä kaikkia piirteitä saavutti merkittävästi pa
 Prophet (v0.7): Perus-Prophet epäonnistui tällä datalla (negatiivinen R²), todennäköisesti liian lyhyen datahistorian (&lt; 2v) vuoksi, jolloin vuosittainen kausivaihtelu jäi mallintamatta.
 Johtopäätös: Tähän mennessä XGBoost on ollut selvästi tarkin malli hyödyntäessään kaikkia saatavilla olevia piirteitä.
 
+
+Status (15.4.2025): Toimiva pipeline datan esikäsittelystä baseline-, XGBoost- ja Prophet-mallien ajoon on valmis. Käsitelty data ja paras malli (XGBoost v0.6) on tallennettu.
+
+**Kehitysideat:**
+
+(Tärkein) Hanki Lisää Historiallista Dataa: Useamman vuoden (3-5+) data parantaisi mallien luotettavuutta ja mahdollistaisi paremman kausivaihtelun mallintamisen.
+Toteuta LSTM-malli: Seuraavaksi kokeillaan LSTM-neuroverkkoa pipeline-rakenteessa (esim. Pipeline_v0.8_LSTM_Training.ipynb).
+Paranna Olemassaolevia: Kokeile Prophetia regressoreilla ja viritä XGBoostin hyperparametreja.
+Kehitä Piirteitä: Luo lag-piirteitä ja liukuvia keskiarvoja.
+Kokeile Muita Malleja: Esim. SARIMA, LightGBM.
 
 
 **Valmiiksi Käsitelty Data (v0.5):**
