@@ -18,6 +18,71 @@ Projektissa hyödynnetään Ilmatieteen laitoksen avointa dataa Helsingin Kallio
 
 ---
 
+## Pipeline-pohjainen kehitys (v0.7b asti)
+
+**Päivitys 15.4.2025:** Projektiin on kehitetty yhtenäistetty pipeline-rakenne datan käsittelyyn ja eri ennustemallien kokeiluun ja vertailuun. Tämä parantaa 
+työnkulun toistettavuutta ja hallintaa.
+
+**Pipeline-koodi:**
+
+Tähänastiset pipeline-vaiheet ja mallikokeilut löytyvät notebookeista `pipeline_notebooks`-kansiosta:
+* **v0.5:** [Peruspipeline (Esikäsittely, EDA, Piirteet, Baseline 
+LR)](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.5_ESIK%C3%84SITTELY%2C_EDA_PIIRTEET_BASELINE.ipynb)
+* **v0.6:** [XGBoost-malli (Koulutus & Evaluointi, 
+FI)](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.6_XGBOOST_final_no_es.ipynb) *(Tarkista tiedostonimi)*
+* **v0.7b:** [Prophet-malli 
+(Regressoreilla)](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/pipeline_notebooks/PIPELINE_v0.7b_PROPHET_with_regressors.ipynb) *(Tarkista 
+tiedostonimi)*
+
+Pipeline kattaa tyypillisesti seuraavat vaiheet: data -> esikäsittely -> EDA -> piirteet -> jako -> malli -> evaluointi -> (tallennus).
+
+**Valmiiksi Käsitelty Data (v0.5):**
+
+Esikäsittelyn, EDA:n ja peruspiirteiden muokkauksen tuloksena syntynyt data on tallennettu ja sitä **suositellaan käytettäväksi mallinnuksen lähtökohtana**:
+* **Tiedosto:** `Helsinki_Data_With_Features_Pipeline_v0.5.parquet`
+* **Sijainti:** [`data/processed/`](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/tree/main/data/processed)
+* **Linkki:** 
+[Helsinki_Data_With_Features_Pipeline_v0.5.parquet](https://github.com/rrwiren/ilmanlaatu-ennuste-helsinki/blob/main/data/processed/Helsinki_Data_With_Features_Pipeline_v0.5.parquet)
+
+Lataus Pandasilla:
+```python
+import pandas as pd
+df = pd.read_parquet("data/processed/Helsinki_Data_With_Features_Pipeline_v0.5.parquet")
+```
+
+| Malli                             | MAE    | RMSE   | R²     | Kommentti                                      |
+| :-------------------------------- | :----- | :----- | :----- | :--------------------------------------------- |
+| Baseline (LR v0.5, aika)          | 12.804 | 16.872 | 0.331  | Käyttää vain aika-piirteitä.                   |
+| XGBoost (v0.6, kaikki piirteet)   | 8.807  | 10.764 | 0.565  | Paras tähän mennessä. Hyödyntää kaikki piirteet.|
+| Prophet (v0.7, ei regressoreita)  | 24.935 | 30.108 | -2.402 | Heikko (vuositt. kausivaihtelu poistettu).      |
+| Prophet (v0.7b, Temp+Vis regr.) | 17.520 | 20.613 | -0.595 | Edelleen heikko (vuositt. kausiv. poistettu). |
+
+
+**Analyysi Tuloksista**
+XGBoost (v0.6) on tällä hetkellä selvästi paras malli (R² ≈ 0.57), hyödyntäen tehokkaasti sää-, ilmanlaatu- ja aikapiirteitä.
+Prophet (v0.7b) suoriutui heikosti jopa sääregressoreiden kanssa. Negatiivinen R²-arvo osoittaa, että malli ei pysty ennustamaan luotettavasti tällä datalla. Pääsyy 
+on edelleen todennäköisesti liian lyhyt datahistoria (~2v), jonka vuoksi Prophet ei mallinna kriittistä vuosittaista kausivaihtelua. Regressorit eivät yksin riitä 
+kompensoimaan tätä.
+Johtopäätös: Monipuolisten piirteiden käyttö ja sopivan mallin (kuten XGBoost) valinta on tuottanut parhaan tuloksen. Datan pituus rajoittaa tällä hetkellä joidenkin 
+mallien (erityisesti Prophet) tehokasta hyödyntämistä.
+
+**Status ja Seuraavat Vaiheet**
+Status (15.4.2025): Toimiva pipeline datan esikäsittelystä baseline-, XGBoost- ja Prophet-mallien ajoon on valmis. Käsitelty data ja paras malli (XGBoost v0.6) on 
+tallennettu. Prophet-kokeilut osoittivat nykyisen datan rajoitteet.
+
+**Kehitysideat:**
+
+(TÄRKEIN) Hanki Lisää Historiallista Dataa: Useamman vuoden (vähintään 3+, mielellään 5+) data on kriittinen askel mallien luotettavuuden parantamiseksi. Se 
+mahdollistaa vuosittaisen kausivaihtelun kunnollisen mallintamisen ja parantaa mallien kykyä yleistää erilaisiin sää- ja päästötilanteisiin.
+Toteuta LSTM-malli: Jatketaan suunnitelman mukaisesti kokeilemalla LSTM-neuroverkkoa seuraavaksi (Pipeline_v0.8_LSTM_Training.ipynb).
+XGBoostin Hyperparametrien Viritys: Optimoidaan nykyisen parhaan mallin (XGBoost v0.6) hyperparametreja.
+Edistyneempi Piirteiden Muokkaus: Kokeillaan lag-piirteitä ja liukuvia keskiarvoja (erityisesti XGBoostille ja LSTM:lle).
+Muut Mallit: Harkitaan muita malleja (esim. SARIMA(X), LightGBM) myöhemmin.
+
+
+
+
+
 ## Pipeline-pohjainen kehitys (v0.7 asti)
 
 **Päivitys 15.4.2025:** Projektiin on kehitetty yhtenäistetty pipeline-rakenne datan käsittelyyn ja eri ennustemallien kokeiluun ja vertailuun. Tämä parantaa 
