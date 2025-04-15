@@ -37,6 +37,21 @@ tiedostonimi tarvittaessa)*
 
 Pipeline kattaa tyypillisesti seuraavat vaiheet: data -> esikäsittely -> EDA -> piirteet -> jako -> malli -> evaluointi -> (tallennus).
 
+Tässä on projektin hakemistorakenne, yksinkertaistettu:
+
+```text
+ilmanlaatu-ennuste-helsinki/
+├── data/
+│   ├── processed/  # Käsitelty data (.parquet)
+│   └── raw/        # Alkuperäiset ladatut .csv
+├── images/         # Tallennetut kuvaajat ja visualisoinnit
+├── models/         # Tallennetut koulutetut mallit (.joblib)
+├── notebooks/      # Vanhemmat, erilliset kokeilut (voi olla vanhentunutta!)
+├── pipeline_notebooks/ # UUDET PIPELINE-NOTEBOOKIT (v0.5 ->) - NYKYINEN KEHITYS
+├── .gitignore
+└── README.md       # Tämä tiedosto
+```
+
 **Valmiiksi Käsitelty Data (v0.5):**
 
 Esikäsittelyn, EDA:n ja peruspiirteiden muokkauksen tuloksena syntynyt data on tallennettu ja sitä **suositellaan käytettäväksi mallinnuksen lähtökohtana**:
